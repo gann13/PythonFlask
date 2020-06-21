@@ -1,0 +1,147 @@
+Flask
+
+---------------------
+application
+
+from Flask import flask
+app = flask(__name__)		object of flask class is our application
+
+@app.route("\")				decorator
+def hello():				bounded function	
+	return "hello user"
+
+if __name__ == "__main__":
+	app.run()				runs the application on the local dev server
+	
+
+app.run(debug = True)		restarts the application automatically on code changes
+
+
+
+-----------------------
+routing	
+
+@app.route()
+def login_page():
+	print "please login"
+app.add_url_rule('/' , 'login', login_page)
+
+EQUIVALENT CODE BELOW:
+
+@app.route('/login')
+def login_page():
+	print "please login"
+
+-----------------------
+
+Variable rules
+
+@app.route('/hello/<name>')
+def hello_user(name):
+	print "hello " + name
+
+
+calling: http://localhost:5000/hello/ram
+output: hello ram
+
+@app.route('/hello/<int:userid>')
+@app.route('/hello/<float:frequency>')
+
+@app.route("/python/")
+@app.route("/python")
+
+
+-------------------------
+URL Building
+
+url_for()
+
+from Flask import flask, redirect, url_for
+app = flask(__name__)
+
+@app.route('/login/admin')
+def admin_page():
+	print "hello admin"
+
+@app.route("/login/<username>")
+def user_page(username):
+	print "Hello " + username
+
+
+@app.route("/home/<person>")
+def home_user(person):
+	if person == "admin":
+		return redirect(url_for('admin_page'))
+	else:
+		return redirect(url_for('user_page',username=person))
+
+if __name__ = "__main__":
+	app.run(debug = True )
+	
+
+------------------------
+http method
+
+@app.route('/login', methods = ['POST'])
+
+
+if request.method == 'POST':
+	name = request.form('nm')
+
+
+------------------------
+
+templates
+
+jinja2 template engine 
+
+render_template()
+
+
+hello.html
+
+<html>
+	<body>
+		<h1> Hello {{name}}! </h1>
+	</body>
+</html>
+
+
+@app.route('/login/<username>')
+def user(username):
+	return render_template('hello.html', name=username)
+
+
+delimiters for escaping html
+
+{{ ... }}		expression to print 
+
+{% ... %} 		statements
+
+{# ... #} 		commments
+
+# ... ## 		line statements
+
+
+<html>
+	<body>
+		{% if marks > 50 %}
+			<h1> you passed </h1>
+		{% else %}
+			<h1> you failed <h1>
+		{% endif %}
+	</body>
+</html>
+
+
+
+----------------------------
+
+
+
+
+
+
+
+
+
